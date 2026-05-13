@@ -221,7 +221,9 @@ header .logo img:hover {
 
 .product-image img {
     width: 100%;
-    height: auto;
+    height: 420px;
+    object-fit: cover;
+    object-position: center;
     display: block;
     transition: 0.5s;
 }
@@ -333,6 +335,7 @@ header .logo img:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
     transition: transform 0.4s ease;
 }
@@ -528,8 +531,11 @@ footer {
 }
 
 .gallery-item img {
-    height: 250px !important;
+    width: 100%;
+    height: 260px !important;
     object-fit: cover;
+    object-position: center;
+    display: block;
     border-bottom: 1px solid rgba(255, 87, 34, 0.2);
 }
 
