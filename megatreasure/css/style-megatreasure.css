@@ -22,7 +22,7 @@
 ========================================= */
 body {
     background: linear-gradient(to bottom, rgba(68, 145, 119, 0.85), var(--bg-color)), 
-                url('/images/bg_megatreasure1.jpg') no-repeat center center fixed;
+                url('../../images/bg_megatreasure1.jpg') no-repeat center center fixed;
     background-size: cover;
     color: var(--text-main);
     overflow-x: hidden;
