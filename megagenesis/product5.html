@@ -105,7 +105,7 @@
         <section class="gallery-section" style="padding-top: 0;">
             <div class="gallery-grid">
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-gallery="images-megagensis/สแตนดี้ขนาดใหญ่.png">
                     <img src="images-megagensis/สแตนดี้ขนาดใหญ่.png" alt="สแตนดี้ขนาดใหญ่">
                     <div class="work-details">
                         <h3>สแตนดี้ขนาดใหญ่</h3>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-gallery="images-megagensis/Feature Board สำหรับงานแสดงสินค้า.jpg">
                     <img src="images-megagensis/Feature Board สำหรับงานแสดงสินค้า.jpg"
                         alt="Feature Board สำหรับงานแสดงสินค้า">
                     <div class="work-details">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-gallery="images-megagensis/สแตนดี้โปรโมชั่น.webp">
                     <img src="images-megagensis/สแตนดี้โปรโมชั่น.webp" alt="สแตนดี้โปรโมชั่น">
                     <div class="work-details">
                         <h3>สแตนดี้โปรโมชั่น</h3>
@@ -159,7 +159,7 @@
                     </div>
                 </div> -->
 
-                <div class="gallery-item">
+                <div class="gallery-item" data-gallery="images-megagensis/สแตนดี้สำหรับงานสัมมนา.webp">
                     <img src="images-megagensis/สแตนดี้สำหรับงานสัมมนา.webp" alt="สแตนดี้สำหรับงานสัมมนา">
                     <div class="work-details">
                         <h3>สแตนดี้สำหรับงานสัมมนา</h3>
@@ -167,10 +167,9 @@
                         <span class="work-tag">งานสัมมนา</span>
                         <span class="work-tag">เป็นระเบียบ</span>
                     </div>
+                </div>
 
-                    <!-- <div style="text-align: center; margin-top: 60px;">
-                <a href="contact-megagenesis.html" class="order-btn">สนใจสั่งทำงานพิมพ์ ทักเลย!</a>
-            </div> -->
+            </div>
         </section>
     </main>
 
@@ -178,7 +177,12 @@
         <div class="modal-container">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <div class="modal-body">
-                <img id="modalImg" src="" alt="ผลงาน">
+                <div class="modal-media">
+                    <button type="button" class="modal-nav modal-prev" onclick="changeSlide(-1)" aria-label="Previous image">&#10094;</button>
+                    <img id="modalImg" src="" alt="ผลงาน">
+                    <button type="button" class="modal-nav modal-next" onclick="changeSlide(1)" aria-label="Next image">&#10095;</button>
+                    <div id="modalCounter" class="modal-counter"></div>
+                </div>
 
                 <div class="modal-details">
                     <h3 id="modalTitle"></h3>
@@ -238,53 +242,91 @@
     <script>
         const modal = document.getElementById("portfolioModal");
         const modalImg = document.getElementById("modalImg");
+        const modalCounter = document.getElementById("modalCounter");
         const modalTitle = document.getElementById("modalTitle");
         const modalDesc = document.getElementById("modalDesc");
         const modalTags = document.getElementById("modalTags");
+        const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+        const placeholderGalleryImage = new URL("images-megagensis/Logo-megagensis.png", window.location.href).href;
+        let currentSlideIndex = 0;
+        let currentGalleryImages = [];
+        let currentGalleryMeta = null;
 
-        // ค้นหาผลงานทั้งหมด และเพิ่มการจับคลิก
-        const galleryItems = document.querySelectorAll('.gallery-item');
+        function buildGallery(item) {
+            const galleryList = (item.dataset.gallery || '')
+                .split(',')
+                .map(path => path.trim())
+                .filter(Boolean)
+                .map(path => new URL(path, window.location.href).href);
+            const clickedImage = item.querySelector('img').src;
+            const orderedImages = galleryList.length ? galleryList : [clickedImage];
+
+            while (orderedImages.length < 10) {
+                orderedImages.push(placeholderGalleryImage);
+            }
+
+            return orderedImages.slice(0, 10);
+        }
+
+        function renderSlide() {
+            if (!currentGalleryImages.length || !currentGalleryMeta) return;
+
+            modalImg.src = currentGalleryImages[currentSlideIndex];
+            modalTitle.innerText = currentGalleryMeta.title;
+            modalDesc.innerText = currentGalleryMeta.desc;
+            modalCounter.innerText = `${currentSlideIndex + 1} / ${currentGalleryImages.length}`;
+
+            modalTags.innerHTML = '';
+            currentGalleryMeta.tags.forEach(tagText => {
+                const newTag = document.createElement('span');
+                newTag.className = 'work-tag';
+                newTag.innerText = tagText;
+                modalTags.appendChild(newTag);
+            });
+        }
+
+        function openModal(item) {
+            currentGalleryImages = buildGallery(item);
+            currentGalleryMeta = {
+                title: item.querySelector('h3').innerText,
+                desc: item.querySelector('p').innerText,
+                tags: Array.from(item.querySelectorAll('.work-tag')).map(tag => tag.innerText)
+            };
+            currentSlideIndex = 0;
+            renderSlide();
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function changeSlide(step) {
+            if (!currentGalleryImages.length) return;
+            currentSlideIndex = (currentSlideIndex + step + currentGalleryImages.length) % currentGalleryImages.length;
+            renderSlide();
+        }
 
         galleryItems.forEach(item => {
             item.addEventListener('click', function () {
-                // ดึงข้อมูลจากกล่องที่คลิก
-                const imgSrc = this.querySelector('img').src;
-                const title = this.querySelector('h3').innerText;
-                const desc = this.querySelector('p').innerText;
-                const tags = this.querySelectorAll('.work-tag');
-
-                // เอาข้อมูลไปใส่ใน Popup
-                modalImg.src = imgSrc;
-                modalTitle.innerText = title;
-                modalDesc.innerText = desc;
-
-                // ล้าง Tag เก่า แล้วใส่ Tag ใหม่
-                modalTags.innerHTML = '';
-                tags.forEach(tag => {
-                    const newTag = document.createElement('span');
-                    newTag.className = 'work-tag';
-                    newTag.innerText = tag.innerText;
-                    modalTags.appendChild(newTag);
-                });
-
-                // แสดง Popup และล็อกหน้าจอด้านหลังไม่ให้เลื่อน
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden';
+                openModal(this);
             });
         });
 
-        // ฟังก์ชันปิด Popup
         function closeModal() {
             modal.classList.remove('show');
-            document.body.style.overflow = 'auto'; // ปลดล็อกหน้าจอ
+            document.body.style.overflow = 'auto';
         }
 
-        // ปิด Popup เมื่อคลิกที่พื้นหลังสีดำ
         window.onclick = function (event) {
             if (event.target == modal) {
                 closeModal();
             }
         }
+
+        document.addEventListener('keydown', function (event) {
+            if (!modal.classList.contains('show')) return;
+            if (event.key === 'Escape') closeModal();
+            if (event.key === 'ArrowLeft') changeSlide(-1);
+            if (event.key === 'ArrowRight') changeSlide(1);
+        });
     </script>
     <script>
         function toggleFooterMenu(event) {

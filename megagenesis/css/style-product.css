@@ -20,7 +20,7 @@
 }
 
 body {
-    background: linear-gradient(to bottom, rgba(99, 68, 47, 0.8), var(--bg-color)),
+    background: linear-gradient(to bottom, rgba(99, 68, 47, 0.45), rgba(12, 8, 5, 0.72)),
         url('../images-megagensis/logo_gen.jpg') no-repeat center center fixed;
     background-size: cover;
     color: var(--text-main);
@@ -646,12 +646,66 @@ footer {
     flex-direction: column;
 }
 
-.modal-body img {
+.modal-media {
+    position: relative;
     width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+    background: #120d09;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
+    overflow: hidden;
+}
+
+.modal-body img {
+    width: 100%;
+    height: 420px;
+    object-fit: contain;
+    display: block;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.12));
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(12, 8, 5, 0.7);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.25s ease;
+    z-index: 2;
+}
+
+.modal-nav:hover {
+    background: var(--primary-color);
+}
+
+.modal-prev {
+    left: 16px;
+}
+
+.modal-next {
+    right: 16px;
+}
+
+.modal-counter {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(12, 8, 5, 0.72);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .modal-details {
@@ -677,10 +731,15 @@ footer {
         flex-direction: row;
     }
 
-    .modal-body img {
+    .modal-media {
         width: 50%;
-        height: auto;
-        max-height: 500px;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 15px;
+    }
+
+    .modal-body img {
+        height: 100%;
+        min-height: 500px;
         border-top-right-radius: 0;
         border-bottom-left-radius: 15px;
     }
