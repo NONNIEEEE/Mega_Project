@@ -567,6 +567,242 @@
      gap: 30px;
  }
 
+.portfolio-section {
+    position: relative;
+    padding: 10px 20px 110px;
+}
+
+.portfolio-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.88fr) minmax(360px, 1.12fr);
+    gap: 34px;
+    align-items: center;
+}
+
+.portfolio-copy,
+.portfolio-gallery {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.portfolio-copy.is-visible,
+.portfolio-gallery.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.portfolio-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 0, 0, 0.08);
+    color: #ff8e8e;
+    font-size: 0.92rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.portfolio-eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    box-shadow: 0 0 14px rgba(255, 0, 0, 0.65);
+}
+
+.portfolio-title {
+    margin-bottom: 22px;
+}
+
+.portfolio-copy p {
+    color: var(--text-muted);
+    line-height: 1.9;
+    font-size: 1rem;
+    max-width: 470px;
+}
+
+.portfolio-notes {
+    display: grid;
+    gap: 14px;
+    margin-top: 30px;
+}
+
+.portfolio-note {
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+}
+
+.portfolio-note strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 1.02rem;
+    color: #fff;
+}
+
+.portfolio-note span {
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.portfolio-stage {
+    position: relative;
+    padding: 20px;
+    border-radius: 30px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(255, 0, 0, 0.2), transparent 32%),
+        linear-gradient(160deg, #1b2025 0%, #0d0f12 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+}
+
+.portfolio-glow {
+    position: absolute;
+    inset: auto -80px -100px auto;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.35), rgba(255, 0, 0, 0));
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+.portfolio-slides {
+    position: relative;
+    min-height: 560px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.28);
+}
+
+.portfolio-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 0.7s ease, transform 0.85s ease;
+    pointer-events: none;
+}
+
+.portfolio-slide.is-active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.portfolio-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.portfolio-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(4, 5, 7, 0.88) 0%, rgba(4, 5, 7, 0.16) 52%, rgba(4, 5, 7, 0.05) 100%);
+}
+
+.portfolio-slide figcaption {
+    position: absolute;
+    left: 26px;
+    right: 26px;
+    bottom: 26px;
+    z-index: 2;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: rgba(15, 17, 20, 0.62);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    line-height: 1.65;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.24);
+}
+
+.portfolio-controls {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    z-index: 3;
+    display: flex;
+    gap: 10px;
+}
+
+.portfolio-arrow {
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    background: rgba(10, 11, 14, 0.55);
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.portfolio-arrow:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 0, 0, 0.92);
+    border-color: rgba(255, 0, 0, 0.92);
+}
+
+.portfolio-thumbs {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.portfolio-thumb {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 18px;
+    padding: 10px;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-thumb img {
+    width: 100%;
+    height: 88px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.portfolio-thumb span {
+    display: block;
+    font-size: 0.92rem;
+    color: #d8dde7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.portfolio-thumb:hover,
+.portfolio-thumb.is-active {
+    transform: translateY(-4px);
+    border-color: rgba(255, 0, 0, 0.45);
+    background: rgba(255, 0, 0, 0.12);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+}
+
 .card-link {
     display: block;
     color: inherit;
@@ -897,6 +1133,74 @@
 
 .card:hover .card-img-wrapper img {
     transform: scale(1.08);
+}
+
+@media (max-width: 980px) {
+    .portfolio-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-copy p {
+        max-width: none;
+    }
+
+    .portfolio-slides {
+        min-height: 480px;
+    }
+}
+
+@media (max-width: 768px) {
+    .portfolio-section {
+        padding: 0 20px 80px;
+    }
+
+    .portfolio-stage {
+        padding: 14px;
+        border-radius: 24px;
+    }
+
+    .portfolio-slides {
+        min-height: 360px;
+        border-radius: 18px;
+    }
+
+    .portfolio-slide figcaption {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        padding: 13px 14px;
+        font-size: 0.94rem;
+    }
+
+    .portfolio-controls {
+        top: 18px;
+        right: 18px;
+    }
+
+    .portfolio-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.4rem;
+    }
+
+    .portfolio-thumbs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .portfolio-thumb {
+        padding: 8px;
+        border-radius: 14px;
+    }
+
+    .portfolio-thumb img {
+        height: 72px;
+        margin-bottom: 8px;
+    }
+
+    .portfolio-thumb span {
+        font-size: 0.86rem;
+    }
 }
 
 /* Skeleton Loading */

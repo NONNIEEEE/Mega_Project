@@ -176,6 +176,79 @@
             </div>
         </div>
 
+        <section class="portfolio-section">
+            <div class="portfolio-shell">
+                <div class="portfolio-copy reveal-on-scroll">
+                    <span class="portfolio-eyebrow">Recent Works</span>
+                    <h2 class="section-title portfolio-title">ผลงานที่ร้านทำ</h2>
+                    <p>
+                        รวมตัวอย่างงานจริงจากหน้าร้านและงานผลิตของเรา ทั้งงานป้าย งานสติ๊กเกอร์ และงานประชาสัมพันธ์
+                        อัปเดตรูปใหม่ได้ง่าย แค่เปลี่ยนรายการภาพในส่วนนี้ก็พร้อมโชว์บนหน้าเว็บทันที
+                    </p>
+                    <div class="portfolio-notes">
+                        <div class="portfolio-note">
+                            <strong>อัปเดตง่าย</strong>
+                            <span>เปลี่ยนหรือเพิ่มรูปในรายการสไลด์ได้โดยตรง</span>
+                        </div>
+                        <div class="portfolio-note">
+                            <strong>โชว์สวย</strong>
+                            <span>มีภาพหลัก ภาพย่อย และเอฟเฟ็กต์เลื่อนอัตโนมัติ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-gallery reveal-on-scroll" data-portfolio-gallery>
+                    <div class="portfolio-stage">
+                        <div class="portfolio-glow"></div>
+
+                        <!-- แก้รูปได้ง่าย: เพิ่ม/ลบ .portfolio-slide และ .portfolio-thumb ให้จำนวนตรงกัน -->
+                        <div class="portfolio-slides">
+                            <figure class="portfolio-slide is-active" data-portfolio-slide>
+                                <img src="images-megagensis/ป้ายไวนิลติดผนัง.png" alt="ตัวอย่างงานป้ายไวนิลติดผนัง">
+                                <figcaption>งานป้ายไวนิลติดผนังสำหรับพื้นที่ประชาสัมพันธ์</figcaption>
+                            </figure>
+                            <figure class="portfolio-slide" data-portfolio-slide>
+                                <img src="images-megagensis/ป้ายไวนิลติดรถยนต์.webp" alt="ตัวอย่างงานสติ๊กเกอร์ติดรถยนต์">
+                                <figcaption>งานสติ๊กเกอร์และสื่อโฆษณาติดรถยนต์</figcaption>
+                            </figure>
+                            <figure class="portfolio-slide" data-portfolio-slide>
+                                <img src="images-megagensis/Feature Board สำหรับงานแสดงสินค้า.jpg" alt="ตัวอย่าง Feature Board สำหรับงานแสดงสินค้า">
+                                <figcaption>Feature Board สำหรับหน้าร้านและงานแสดงสินค้า</figcaption>
+                            </figure>
+                            <figure class="portfolio-slide" data-portfolio-slide>
+                                <img src="images-megagensis/ป้ายสแตนเลสสำหรับโรงงาน.jpg" alt="ตัวอย่างป้ายสแตนเลสสำหรับโรงงาน">
+                                <figcaption>ป้ายสแตนเลสสำหรับโรงงานที่เน้นความทนทานและภาพลักษณ์มืออาชีพ</figcaption>
+                            </figure>
+                        </div>
+
+                        <div class="portfolio-controls" aria-label="เปลี่ยนดูผลงาน">
+                            <button type="button" class="portfolio-arrow prev" data-portfolio-prev aria-label="ดูผลงานก่อนหน้า">‹</button>
+                            <button type="button" class="portfolio-arrow next" data-portfolio-next aria-label="ดูผลงานถัดไป">›</button>
+                        </div>
+
+                        <div class="portfolio-thumbs" aria-label="รายการผลงาน">
+                            <button type="button" class="portfolio-thumb is-active" data-portfolio-thumb aria-label="ดูงานชิ้นที่ 1">
+                                <img src="images-megagensis/ป้ายไวนิลติดผนัง.png" alt="">
+                                <span>ป้ายไวนิล</span>
+                            </button>
+                            <button type="button" class="portfolio-thumb" data-portfolio-thumb aria-label="ดูงานชิ้นที่ 2">
+                                <img src="images-megagensis/ป้ายไวนิลติดรถยนต์.webp" alt="">
+                                <span>ติดรถยนต์</span>
+                            </button>
+                            <button type="button" class="portfolio-thumb" data-portfolio-thumb aria-label="ดูงานชิ้นที่ 3">
+                                <img src="images-megagensis/Feature Board สำหรับงานแสดงสินค้า.jpg" alt="">
+                                <span>Feature Board</span>
+                            </button>
+                            <button type="button" class="portfolio-thumb" data-portfolio-thumb aria-label="ดูงานชิ้นที่ 4">
+                                <img src="images-megagensis/ป้ายสแตนเลสสำหรับโรงงาน.jpg" alt="">
+                                <span>ป้ายสแตนเลส</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer>
@@ -251,6 +324,93 @@
                     }, { once: true });
                 }
             })();
+    </script>
+
+    <script>
+        (function () {
+            const gallery = document.querySelector('[data-portfolio-gallery]');
+            if (!gallery) return;
+
+            const slides = Array.from(gallery.querySelectorAll('[data-portfolio-slide]'));
+            const thumbs = Array.from(gallery.querySelectorAll('[data-portfolio-thumb]'));
+            const prevButton = gallery.querySelector('[data-portfolio-prev]');
+            const nextButton = gallery.querySelector('[data-portfolio-next]');
+            let activeIndex = 0;
+            let autoplayId = null;
+
+            const setActiveSlide = function (index) {
+                activeIndex = (index + slides.length) % slides.length;
+
+                slides.forEach(function (slide, slideIndex) {
+                    slide.classList.toggle('is-active', slideIndex === activeIndex);
+                });
+
+                thumbs.forEach(function (thumb, thumbIndex) {
+                    thumb.classList.toggle('is-active', thumbIndex === activeIndex);
+                });
+            };
+
+            const startAutoplay = function () {
+                clearInterval(autoplayId);
+                autoplayId = setInterval(function () {
+                    setActiveSlide(activeIndex + 1);
+                }, 4200);
+            };
+
+            thumbs.forEach(function (thumb, thumbIndex) {
+                thumb.addEventListener('click', function () {
+                    setActiveSlide(thumbIndex);
+                    startAutoplay();
+                });
+            });
+
+            if (prevButton) {
+                prevButton.addEventListener('click', function () {
+                    setActiveSlide(activeIndex - 1);
+                    startAutoplay();
+                });
+            }
+
+            if (nextButton) {
+                nextButton.addEventListener('click', function () {
+                    setActiveSlide(activeIndex + 1);
+                    startAutoplay();
+                });
+            }
+
+            gallery.addEventListener('mouseenter', function () {
+                clearInterval(autoplayId);
+            });
+
+            gallery.addEventListener('mouseleave', function () {
+                startAutoplay();
+            });
+
+            setActiveSlide(0);
+            startAutoplay();
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const revealItems = document.querySelectorAll('.reveal-on-scroll');
+            if (!revealItems.length) return;
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.18
+            });
+
+            revealItems.forEach(function (item) {
+                observer.observe(item);
+            });
+        })();
     </script>
 </body>
 
