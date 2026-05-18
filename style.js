@@ -17,10 +17,42 @@ window.addEventListener('load', () => {
 
         const items = document.querySelectorAll('.item');
 
-        // 👉 ตั้ง default = ตัวที่ 2
+        // 👉 ตั้ง default ให้เป็นสไลด์ที่มีชื่อ "ร้านอาณาจักรป้าย"
         items.forEach(i => i.classList.remove('active'));
-        if (items[1]) {
-            items[1].classList.add('active');
+
+        // ค้นหา item โดยเช็คข้อความใน .name
+        const itemsArr = Array.from(items);
+        const targetIndex = itemsArr.findIndex(it => {
+            const nameEl = it.querySelector('.name');
+            return nameEl && nameEl.textContent && nameEl.textContent.trim() === 'ร้านอาณาจักรป้าย';
+        });
+
+        if (targetIndex !== -1) {
+            // หมุนรายการจน target มาอยู่ที่ตำแหน่ง index 1
+            let currentItems = Array.from(document.querySelectorAll('.item'));
+            let idx = currentItems.findIndex(it => it.querySelector('.name') && it.querySelector('.name').textContent.trim() === 'ร้านอาณาจักรป้าย');
+            // If already at center (1) just mark active
+            while (idx !== 1) {
+                currentItems = document.querySelectorAll('.item');
+                idx = Array.from(currentItems).findIndex(it => it.querySelector('.name') && it.querySelector('.name').textContent.trim() === 'ร้านอาณาจักรป้าย');
+                if (idx > 1) {
+                    // move first to end
+                    slide.appendChild(currentItems[0]);
+                } else if (idx === 0) {
+                    // if it's at 0, move last to front to shift right
+                    slide.insertBefore(currentItems[currentItems.length - 1], currentItems[0]);
+                } else {
+                    break;
+                }
+            }
+
+            // ตั้ง active ให้เป็นตัวกลาง
+            const newItems = document.querySelectorAll('.item');
+            newItems.forEach(i => i.classList.remove('active'));
+            if (newItems[1]) newItems[1].classList.add('active');
+        } else {
+            // fallback: ตั้ง default เป็นตัวที่ 2
+            if (items[1]) items[1].classList.add('active');
         }
 
     }, 300);
