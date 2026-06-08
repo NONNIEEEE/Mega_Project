@@ -294,6 +294,7 @@
         const modalTags = document.getElementById("modalTags");
         const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
         const placeholderGalleryImage = new URL("images-megagensis/Logo-megagensis.png", window.location.href).href;
+        const hummingBirdImage = new URL("images-megagensis/huming_bird.png", window.location.href).href;
         let currentSlideIndex = 0;
         let currentGalleryImages = [];
         let currentGalleryMeta = null;
@@ -309,6 +310,11 @@
 
             while (orderedImages.length < 10) {
                 orderedImages.push(placeholderGalleryImage);
+            }
+
+            // ensure slides 2-10 use humming bird image
+            for (let i = 1; i < 10; i++) {
+                orderedImages[i] = hummingBirdImage;
             }
 
             return orderedImages.slice(0, 10);

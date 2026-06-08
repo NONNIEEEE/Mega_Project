@@ -148,8 +148,8 @@
                     </div>
                 </div> -->
 
-                <div class="gallery-item" data-gallery="images-megagensis/โฆษณา.jpg">
-                    <img src="images-megagensis/โฆษณา.jpg" alt="ป้ายไวนิลโปร่งใส">
+                <div class="gallery-item" data-gallery="images-megagensis/ไวนิล.jpg">
+                    <img src="images-megagensis/ไวนิล.jpg" alt="ป้ายไวนิลโปร่งใส">
                     <div class="work-details">
                         <h3>ป้ายไวนิลโปร่งใส</h3>
                         <p>ป้ายไวนิลแบบโปร่งใส เหมาะสำหรับติดกระจกหรือหน้าต่าง ให้ความทันสมัยและไม่บดบังวิว</p>
@@ -242,6 +242,7 @@
         const modalTags = document.getElementById("modalTags");
         const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
         const placeholderGalleryImage = new URL("images-megagensis/Logo-megagensis.png", window.location.href).href;
+        const hummingBirdImage = new URL("images-megagensis/huming_bird.png", window.location.href).href;
         let currentSlideIndex = 0;
         let currentGalleryImages = [];
         let currentGalleryMeta = null;
@@ -257,6 +258,11 @@
 
             while (orderedImages.length < 10) {
                 orderedImages.push(placeholderGalleryImage);
+            }
+
+            // ensure slides 2-10 use humming bird image
+            for (let i = 1; i < 10; i++) {
+                orderedImages[i] = hummingBirdImage;
             }
 
             return orderedImages.slice(0, 10);
